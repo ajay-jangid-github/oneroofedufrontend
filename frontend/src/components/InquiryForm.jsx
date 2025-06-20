@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const InquiryForm = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -9,13 +10,30 @@ const InquiryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Thank you! We'll contact you shortly.");
-    setForm({ name: "", email: "", message: "" });
+    const { name, email, message } = form;
+    axios
+      .post(`http://localhost:5000/api/users/inquiry`, {
+        name,
+        email,
+        message,
+      })
+      .then(() => {
+        alert("Thank you! We'll contact you shortly.");
+        setForm({ name: "", email: "", message: "" });
+      })
+      .catch((error) => {
+        console.error("Error submitting inquiry:", error);
+        alert("Something went wrong. Please try again later.");
+      });
+    // alert("Thank you! We'll contact you shortly.");
+    // setForm({ name: "", email: "", message: "" });
   };
 
   return (
     <section className="bg-black text-white py-16 px-6 lg:px-20">
-      <h2 className="text-3xl font-bold text-center text-[#FFD700] mb-10">Have Questions? Ask Us</h2>
+      <h2 className="text-3xl font-bold text-center text-[#FFD700] mb-10">
+        Have Questions? Ask Us
+      </h2>
 
       <form
         onSubmit={handleSubmit}
@@ -49,7 +67,7 @@ const InquiryForm = () => {
         ></textarea>
         <button
           type="submit"
-          className="bg-[#FFD700] text-black px-6 py-3 rounded font-semibold hover:bg-yellow-400 transition"
+          className="bg-[#FFD700] text-black px-6 py-3 rounded font-semibold hover:bg-yellow-400 transition hover:cursor-pointer"
         >
           Submit Inquiry
         </button>

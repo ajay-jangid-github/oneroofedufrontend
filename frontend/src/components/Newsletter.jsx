@@ -6,7 +6,8 @@ const Newsletter = () => {
           Subscribe for Free Study Resources & Updates!
         </h2>
         <p className="text-gray-300 mb-6">
-          Join thousands of CA/CS aspirants and school students who receive our curated notes, test updates, and expert tips directly in their inbox.
+          Join thousands of CA/CS aspirants and school students who receive our
+          curated notes, test updates, and expert tips directly in their inbox.
         </p>
 
         <form className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -17,7 +18,7 @@ const Newsletter = () => {
           />
           <button
             type="submit"
-            className="bg-[#FFD700] hover:bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold transition duration-300"
+            className="bg-[#FFD700] hover:bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold transition duration-300 hover:cursor-pointer"
           >
             Subscribe
           </button>

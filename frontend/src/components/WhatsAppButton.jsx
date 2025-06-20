@@ -1,20 +1,22 @@
+import React from "react";
+import { FaWhatsapp } from "react-icons/fa";
+
 const WhatsAppButton = () => {
+  const phoneNumber = "9079001762";
+  const message =
+    "Hello, I visited your site OneRoofEduTech! and want to know more!";
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+    message
+  )}`;
+
   return (
     <a
-      href="https://wa.me/919999999999" // Replace with our WhatsApp number
+      href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-green-500 text-white rounded-full p-4 shadow-lg transition-transform duration-300 hover:scale-110"
-      aria-label="Chat on WhatsApp"
+      className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg animate-bounce"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-7 w-7"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.149s-.767.967-.94 1.165c-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.654-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.148-.669-1.611-.916-2.207-.242-.582-.487-.504-.67-.513l-.572-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.1 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.007-1.413.248-.694.248-1.29.173-1.413-.074-.123-.272-.198-.57-.347m-5.421 7.617h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.64-.235-.374a9.86 9.86 0 01-1.51-5.28c.001-5.45 4.436-9.884 9.888-9.884a9.847 9.847 0 016.987 2.896 9.85 9.85 0 012.896 6.991c-.003 5.45-4.437 9.884-9.888 9.884m8.413-18.297A11.815 11.815 0 0012.05.002C5.495 0 .111 5.383.109 11.96c0 2.106.552 4.162 1.6 5.972L.057 24l6.202-1.623a11.9 11.9 0 005.78 1.472h.005c6.557 0 11.943-5.383 11.946-11.96a11.89 11.89 0 00-3.503-8.478" />
-      </svg>
+      <FaWhatsapp size={28} />
     </a>
   );
 };

@@ -1,14 +1,41 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import logo from "../assets/logo.png";
 import DarkLightToggle from "./DarkLightToggle";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isClassOpen, setIsClassOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const navigate = useNavigate();
   const timeoutRef = useRef(null);
+
+  // 👇 check login status on load
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   setIsLoggedIn(!!token); // set true if token exists
+  // }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   setIsLoggedIn(false);
+  //   navigate("/login");
+  // };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
 
   const handleMouseEnterCourses = () => {
     clearTimeout(timeoutRef.current);
@@ -42,7 +69,11 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center h-16">
         {/* Logo + Brand */}
         <div className="flex items-center space-x-3">
-          <Link to="/" onClick={scrollToTop} className="flex items-center space-x-3">
+          <Link
+            to="/"
+            onClick={scrollToTop}
+            className="flex items-center space-x-3"
+          >
             <img src={logo} alt="Logo" className="h-12 w-12 object-contain" />
             <h1 className="text-[#FFD700] text-sm sm:text-lg font-[Cinzel] tracking-widest animate-pulse-glow leading-tight">
               One Roof Education
@@ -72,7 +103,7 @@ const Navbar = () => {
             onMouseEnter={handleMouseEnterCourses}
             onMouseLeave={handleMouseLeaveCourses}
           >
-            <button className="hover:text-[#FFD700] transition duration-300">
+            <button className="hover:text-[#FFD700] transition duration-300  hover:cursor-pointer">
               Courses ▾
             </button>
 
@@ -96,7 +127,15 @@ const Navbar = () => {
                   </button>
                   {isClassOpen && (
                     <div className="absolute top-0 left-full mt-0 w-40 bg-black text-white border border-gray-700 rounded shadow-lg z-50">
-                      {["Class 6", "Class 7", "Class 8", "Class 9", "Class 10", "Class 11", "Class 12"].map((cls) => (
+                      {[
+                        "Class 6",
+                        "Class 7",
+                        "Class 8",
+                        "Class 9",
+                        "Class 10",
+                        "Class 11",
+                        "Class 12",
+                      ].map((cls) => (
                         <Link
                           key={cls}
                           to={`/courses/${cls.toLowerCase().replace(" ", "-")}`}
@@ -121,8 +160,20 @@ const Navbar = () => {
             )}
           </div>
 
-          <NavItem to="/login" label="Login" />
-          <NavItem to="/register" label="Register" />
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="relative group block text-[#FFD700] hover:text-[#FFD700] transition duration-300 px-2 py-1 hover:cursor-pointer"
+            >
+              <span className="group-hover:text-[#FFD700]">Logout</span>
+              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#FFD700] group-hover:w-full transition-all duration-300"></span>
+            </button>
+          ) : (
+            <>
+              <NavItem to="/login" label="Login" />
+              <NavItem to="/register" label="Register" />
+            </>
+          )}
           <DarkLightToggle />
         </div>
       </div>
@@ -135,7 +186,15 @@ const Navbar = () => {
           <NavItem to="/courses/ca-cs" label="CA / CS" />
           <div>
             <span className="block mb-2 text-[#FFD700]">Class 6–12</span>
-            {["Class 6", "Class 7", "Class 8", "Class 9", "Class 10", "Class 11", "Class 12"].map((cls) => (
+            {[
+              "Class 6",
+              "Class 7",
+              "Class 8",
+              "Class 9",
+              "Class 10",
+              "Class 11",
+              "Class 12",
+            ].map((cls) => (
               <Link
                 key={cls}
                 to={`/courses/${cls.toLowerCase().replace(" ", "-")}`}

@@ -39,8 +39,12 @@ const FAQSection = () => {
   return (
     <section className="bg-white py-16 px-6 lg:px-20 text-black">
       <div className="max-w-5xl mx-auto text-center mb-12">
-        <h2 className="text-3xl font-[Cinzel] font-bold text-[#FFD700] mb-4">Frequently Asked Questions</h2>
-        <p className="text-gray-700">Still have questions? We’re here to help you!</p>
+        <h2 className="text-3xl font-[Cinzel] font-bold text-[#FFD700] mb-4">
+          Frequently Asked Questions
+        </h2>
+        <p className="text-gray-700">
+          Still have questions? We’re here to help you!
+        </p>
       </div>
 
       <div className="max-w-4xl mx-auto space-y-4">
@@ -51,7 +55,7 @@ const FAQSection = () => {
           >
             <button
               onClick={() => toggleFAQ(index)}
-              className="w-full text-left px-6 py-4 flex justify-between items-center bg-gray-100 font-semibold"
+              className="w-full text-left px-6 py-4 flex justify-between items-center bg-gray-100 font-semibold hover:cursor-pointer"
             >
               {faq.question}
               <FaChevronDown

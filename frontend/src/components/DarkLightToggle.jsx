@@ -8,7 +8,7 @@ const DarkLightToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="text-yellow-400 text-xl transition hover:scale-110"
+      className="text-yellow-400 text-xl transition hover:scale-110 hover:cursor-pointer"
     >
       {theme === "light" ? <BsMoon /> : <BsSun />}
     </button>
