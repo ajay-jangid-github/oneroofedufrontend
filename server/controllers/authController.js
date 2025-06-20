@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log("Registering user:");
+  const type = 0; //for admin and 0 for users
+  console.log("Registering user:", type);
   if (!name || !email || !password) {
     return res.status(400).json({ message: "Please fill all the fields." });
   }
@@ -31,6 +32,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: cryptedpassword,
+      type: type,
     });
     console.log("User created successfully!");
 
@@ -42,9 +44,12 @@ const registerUser = async (req, res) => {
       }
     );
 
-    return res
-      .status(200)
-      .json({ data: data, token, message: "User created successfully!" });
+    return res.status(200).json({
+      data: data,
+      token,
+      type: type,
+      message: "User created successfully!",
+    });
   } catch (error) {
     console.log("Error registering user:", error);
     return res.status(500).json({ message: "Server error!" });
@@ -60,7 +65,7 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await UserModel.findOne({ email });
-    // console.log(user);
+
     if (!user) {
       console.log("user not found");
       return res.status(400).json({ message: "User Not found!" });
@@ -85,6 +90,7 @@ const loginUser = async (req, res) => {
     return res.status(200).json({
       message: "Login Succsfully",
       token,
+      type: user.type,
       user: {
         id: user._id,
         name: user.name,

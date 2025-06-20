@@ -10,9 +10,33 @@ const Navbar = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isClassOpen, setIsClassOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
 
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
+
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUserName(parsedUser.name);
+    }
+  }, []);
+
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // 👇 check login status on load
   // useEffect(() => {
@@ -33,6 +57,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setIsLoggedIn(false);
     navigate("/login");
   };
@@ -160,14 +185,45 @@ const Navbar = () => {
             )}
           </div>
 
-          {isLoggedIn ? (
-            <button
-              onClick={handleLogout}
-              className="relative group block text-[#FFD700] hover:text-[#FFD700] transition duration-300 px-2 py-1 hover:cursor-pointer"
-            >
-              <span className="group-hover:text-[#FFD700]">Logout</span>
-              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#FFD700] group-hover:w-full transition-all duration-300"></span>
-            </button>
+          {isLoggedIn && userName ? (
+            // <button
+            //   onClick={handleLogout}
+            //   className="relative group block text-[#FFD700] hover:text-[#FFD700] transition duration-300 px-2 py-1 hover:cursor-pointer"
+            // >
+            //   <span className="group-hover:text-[#FFD700]">Logout</span>
+            //   <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#FFD700] group-hover:w-full transition-all duration-300"></span>
+            //   <br />
+            //   <span className="text-[#FFD700] font-semibold">
+            //     Hi, {userName}
+            //   </span>
+            // </button>
+
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                className="flex items-center gap-1 text-[#FFD700] font-semibold hover:text-white transition hover:cursor-pointer"
+              >
+                Hi, {userName}{" "}
+                <span
+                  className={`text-xs transform transition-transform duration-200 ${
+                    isDropdownOpen ? "rotate-180" : "rotate-0"
+                  }`}
+                >
+                  ▼
+                </span>
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-32 bg-black text-white border border-gray-700 rounded shadow-lg z-50">
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 hover:bg-[#FFD700] hover:text-black transition hover:cursor-pointer"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <>
               <NavItem to="/login" label="Login" />

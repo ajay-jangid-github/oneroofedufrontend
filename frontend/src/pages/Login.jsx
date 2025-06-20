@@ -26,11 +26,26 @@ const Login = () => {
 
         const token = res.data.token;
         localStorage.setItem("token", token);
-        navigate("/");
+        console.log("Response Data:", res.data.type);
+        const name = localStorage.setItem(
+          "user",
+          JSON.stringify(res.data.user)
+        );
+        console.log(name);
+        // return false;
+
+        if (res.data.type == 1) {
+          // alert("login to normal type 1");
+
+          navigate("/AdminDashboard");
+        } else {
+          // alert("login to normal type 0");
+          navigate("/");
+        }
         window.location.reload();
       } catch (error) {
         const errmsg = error.response?.data?.message || "Login failed";
-        alert(errmsg);
+        // alert(errmsg);
 
         if (errmsg.toLowerCase().includes("email")) {
           setErrors({ email: errmsg });

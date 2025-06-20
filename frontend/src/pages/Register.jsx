@@ -42,7 +42,13 @@ const Register = () => {
         const token = res.data.token;
         // ✅ Save token to localStorage
         localStorage.setItem("token", token);
-        alert("You are registered successfully!");
+        if (res.data.type == 1) {
+          console.log(res.data.type);
+          alert("You are registered successfully!");
+          navigate("/AdminDashboard");
+        }
+        console.log(res.data.type);
+
         navigate("/");
         window.location.reload();
       } catch (error) {

@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    type: {
+      type: String,
+      enum: ["0", "1"], // or use Number: 0 for user, 1 for admin
+      required: true,
+      default: "0",
+    },
+
     password: {
       type: String,
       required: true,
